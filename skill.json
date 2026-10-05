@@ -1,0 +1,53 @@
+{
+  "name": "genpark-multi-agent-speculative-execution-coordinator-skill",
+  "version": "1.0.0",
+  "description": "Multi-Agent Speculative Execution & Early Cancellation Coordinator. Spawns speculative candidate execution paths concurrently, tracks milestone validation scores, and broadcasts early cancellation signals to inferior paths to slash inference overhead.",
+  "tools": [
+    {
+      "name": "coordinate_speculative_execution",
+      "description": "Coordinate speculative multi-agent execution: register speculative paths, update milestone progress, select winning trajectory, and issue cooperative cancellation signals.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "register_speculative_path",
+              "update_path_milestone",
+              "evaluate_speculative_candidates",
+              "get_active_paths"
+            ],
+            "description": "Coordination action."
+          },
+          "session_id": {
+            "type": "string",
+            "description": "Workflow session identifier."
+          },
+          "path_id": {
+            "type": "string",
+            "description": "Unique identifier for candidate speculative branch."
+          },
+          "agent_id": {
+            "type": "string",
+            "description": "Worker agent executing branch."
+          },
+          "milestone_name": {
+            "type": "string",
+            "description": "Completed milestone (e.g. flight_found, hotel_confirmed)."
+          },
+          "confidence_score": {
+            "type": "number",
+            "description": "Confidence score for current milestone (0.0 to 1.0)."
+          },
+          "estimated_cost_usd": {
+            "type": "number",
+            "description": "Estimated cost of candidate trajectory."
+          }
+        },
+        "required": [
+          "action"
+        ]
+      }
+    }
+  ]
+}
